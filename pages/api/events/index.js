@@ -2,7 +2,7 @@
 const { connectDB } = require('../../../lib/mongodb');
 const Event = require('../../../models/Event');
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).end();
   try {
     await connectDB();

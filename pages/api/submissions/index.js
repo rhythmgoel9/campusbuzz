@@ -2,7 +2,7 @@
 const { connectDB } = require('../../../lib/mongodb');
 const Submission = require('../../../models/Submission');
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
   try {
     const { name, college, date, cat, venue, prize, desc, link, email, size } = req.body || {};
