@@ -970,7 +970,7 @@ async function apiFetch(url, opts = {}) {
 }
 
 const API = {
-  async query({ cat, search, page = 1, limit = 9 } = {}) {
+  async query({ cat, search, page = 1, limit = 27 } = {}) {
     const params = new URLSearchParams();
     if (cat && cat !== 'all') params.set('cat', cat);
     if (search) params.set('search', search);
@@ -2663,7 +2663,7 @@ function HomePage({go}){
   const [loading,setLoading]=useState(true);
   const [sel,setSel]=useState(null);
   useScrollReveal();
-  useEffect(()=>{(async()=>{const[s,f]=await Promise.all([API.stats(),API.query({limit:6})]);setStats(s);setFeatured(f.events);setLoading(false);})();},[]);
+  useEffect(()=>{(async()=>{const[s,f]=await Promise.all([API.stats(),API.query({limit:20})]);setStats(s);setFeatured(f.events);setLoading(false);})();},[]);
 
   const cats=[{cat:"concert",emoji:"🎵",name:"Concerts",color:"#ff2d9b",count:2},{cat:"dance",emoji:"💃",name:"Dance",color:"#f5ff00",count:3},{cat:"literary",emoji:"📚",name:"Literary",color:"#00d4ff",count:2},{cat:"mun",emoji:"🌍",name:"MUN",color:"#9b4dff",count:2},{cat:"fest",emoji:"🎊",name:"Fests",color:"#ff6b00",count:1},{cat:"tech",emoji:"💻",name:"Tech",color:"#39ff14",count:2},{cat:"poetry",emoji:"✍️",name:"Poetry",color:"#bf5fff",count:1},{cat:"music",emoji:"🎸",name:"Music",color:"#ff9900",count:1}];
 
@@ -2824,7 +2824,7 @@ function EventsPage(){
   const [data,setData]=useState(null);
   const [loading,setLoading]=useState(true);
   const [sel,setSel]=useState(null);
-  const load=useCallback(async()=>{setLoading(true);const r=await API.query({cat:filter,search,page,limit:9});setData(r);setLoading(false);},[filter,search,page]);
+  const load=useCallback(async()=>{setLoading(true);const r=await API.query({cat:filter,search,page,limit:27});setData(r);setLoading(false);},[filter,search,page]);
   useEffect(()=>{load();},[load]);
   useEffect(()=>{setPage(1);},[filter,search]);
   const cats=[{id:"all",l:"ALL"},{id:"concert",l:"CONCERT"},{id:"dance",l:"DANCE"},{id:"literary",l:"LITERARY"},{id:"mun",l:"MUN"},{id:"fest",l:"FEST"},{id:"tech",l:"TECH"},{id:"poetry",l:"POETRY"},{id:"music",l:"MUSIC"}];
