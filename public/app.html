@@ -3293,7 +3293,7 @@ function saveInterests(){
 var chips=document.querySelectorAll('#interest-chips div');
 var selected=Array.from(chips).filter(function(c){return c.getAttribute('data-sel')==='1';}).map(function(c){return c.textContent.trim().split(' ').slice(1).join(' ');});
 if(selected.length===0){selected=['fest','tech'];}
-localStorage.setItem('cb_interests',JSON.stringify(selected));
+var uEmail=localStorage.getItem('cb_user_email')||'default';localStorage.setItem('cb_interests_'+uEmail,JSON.stringify(selected));
 document.getElementById('interest-modal').style.display='none';
 location.reload();
 }
