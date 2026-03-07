@@ -3238,7 +3238,8 @@ localStorage.setItem('cb_user_name',data.name);
 localStorage.setItem('cb_user_email',email);
 document.getElementById('auth-modal').style.display='none';
 document.getElementById('auth-modal').style.visibility='hidden';
-var interests=localStorage.getItem('cb_interests');
+var cbKey='cb_interests_'+email;
+var interests=localStorage.getItem(cbKey);
 var hasInterests=interests&&JSON.parse(interests).length>0;
 if(!hasInterests){
   document.getElementById('interest-modal').style.display='flex';
