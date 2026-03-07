@@ -1032,6 +1032,7 @@ const API = {
   },
 
   getUser() { return getLocalUser(); },
+  getAllEvents() { try { const c=localStorage.getItem("cb_events_cache"); return c?JSON.parse(c):[]; } catch{return[];} },
   getMyRegs() { return loadLocalRegs(); },
 };
 
@@ -3232,8 +3233,8 @@ const data=await res.json();
 localStorage.setItem('cb_token',data.token);
 localStorage.setItem('cb_user_name',data.name);
 localStorage.setItem('cb_user_email',email);
-const m=document.getElementById('auth-modal');m.style.display='none';m.style.visibility='hidden';if(!localStorage.getItem('cb_interests')){setTimeout(()=>showInterestModal(),300);}else{location.reload();}
-location.reload();
+const m=document.getElementById('auth-modal');m.style.display='none';m.style.visibility='hidden';if(!localStorage.getItem('cb_interests')){setTimeout(function(){document.getElementById('interest-modal').style.display='flex';},300);}else{location.reload();}
+
 }catch(e){err.textContent='Server error!';err.style.display='block';}
 }
 function openAuthModal(){const m=document.getElementById('auth-modal');m.style.display='flex';m.style.visibility='visible';}window.addEventListener('load',function(){const token=localStorage.getItem('cb_token');const loginBtns=document.querySelectorAll('[data-login-btn]');loginBtns.forEach(b=>{b.style.display=token?'none':'inline-block';});});
