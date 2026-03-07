@@ -957,8 +957,8 @@ function storeEmail(email) {
 // ── Fake logged-in user (based on stored email) ──
 function getLocalUser() {
   const email = getStoredEmail();
-  const name = (localStorage.getItem('cb_user_name') || 'Student').trim();
-  return { name: name || 'Student', email, college: '', avatar: (name||'S')[0].toUpperCase() };
+  const name = localStorage.getItem('cb_user_name') ? localStorage.getItem('cb_user_name').trim() : null;
+  if(!name || !localStorage.getItem('cb_token')){return null;}return { name, email, college: '', avatar: name[0].toUpperCase() };
 }
 
 async function apiFetch(url, opts = {}) {
@@ -2178,9 +2178,9 @@ function Nav({page,go}){
           </div>
         )}
         <div ref={btnRef} style={{position:"relative"}}>
-          <button className={`profile-btn ${ddOpen?"open":""}`} onClick={()=>setDdOpen(o=>!o)}>
-            <div className="profile-avatar">{user.avatar}</div>
-            <span className="profile-name">{user.name.split(" ")[0]}</span>
+          <button className={`profile-btn ${ddOpen?"open":""}`} onClick={()=>user?setDdOpen(o=>!o):openAuthModal()}>
+            <div className="profile-avatar">{user ? user.avatar : "?"}</div>
+            <span className="profile-name">{user ? user.name.split(" ")[0] : "Login"}</span>
             <span className="profile-chevron">▼</span>
           </button>
           {ddOpen&&<ProfileDropdown onClose={()=>setDdOpen(false)} go={go}/>}
