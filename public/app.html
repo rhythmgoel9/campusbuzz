@@ -2022,7 +2022,7 @@ function AIRecommender(){
 
   const getRecommendations=async()=>{
     setLoading(true);
-    const interests=JSON.parse(localStorage.getItem('cb_interests')||'[]');
+    var _uEmail=localStorage.getItem('cb_user_email')||'default';const interests=JSON.parse(localStorage.getItem('cb_interests_'+_uEmail)||'[]');
     const myRegs=API.getMyRegs();
     const regCats=myRegs.map(r=>{const ev=db.getEvent(r.eventId);return ev&&ev.cat;}).filter(Boolean);
     const allCats=[...new Set([...interests.map(function(i){return i.toLowerCase();}), ...regCats])];
