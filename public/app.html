@@ -2143,7 +2143,7 @@ function ProfileDropdown({onClose,go}){
       <div className="dd-footer">
         <button className="dd-footer-btn ghost" onClick={()=>{go("profile");onClose();}}>View Profile</button>
         <button className="dd-footer-btn ghost" onClick={()=>{go("myregs");onClose();}}>My Passes</button>
-        <button className="dd-footer-btn danger">Logout</button>
+        <button className="dd-footer-btn danger" onClick={()=>logout()}>Logout</button>
       </div>
     </div>
   );
@@ -3229,7 +3229,7 @@ const m=document.getElementById('auth-modal');m.style.display='none';m.style.vis
 location.reload();
 }catch(e){err.textContent='Server error!';err.style.display='block';}
 }
-function openAuthModal(){if(localStorage.getItem('cb_token')){return;}const m=document.getElementById('auth-modal');m.style.display='flex';m.style.visibility='visible';}
+function openAuthModal(){const m=document.getElementById('auth-modal');m.style.display='flex';m.style.visibility='visible';}window.addEventListener('load',function(){const token=localStorage.getItem('cb_token');const loginBtns=document.querySelectorAll('[data-login-btn]');loginBtns.forEach(b=>{b.style.display=token?'none':'inline-block';});});
 function logout(){localStorage.removeItem('cb_token');localStorage.removeItem('cb_user_name');localStorage.removeItem('cb_user_email');location.reload();}
 </script></body>
 </html>
