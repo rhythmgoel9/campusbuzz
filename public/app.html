@@ -3230,6 +3230,6 @@ location.reload();
 }catch(e){err.textContent='Server error!';err.style.display='block';}
 }
 function openAuthModal(){const m=document.getElementById('auth-modal');m.style.display='flex';m.style.visibility='visible';}window.addEventListener('load',function(){const token=localStorage.getItem('cb_token');const loginBtns=document.querySelectorAll('[data-login-btn]');loginBtns.forEach(b=>{b.style.display=token?'none':'inline-block';});});
-function logout(){localStorage.removeItem('cb_token');localStorage.removeItem('cb_user_name');localStorage.removeItem('cb_user_email');location.reload();}
+function logout(){localStorage.removeItem('cb_token');localStorage.removeItem('cb_user_name');localStorage.removeItem('cb_user_email');window.location.href='/';};
 </script></body>
 </html>
