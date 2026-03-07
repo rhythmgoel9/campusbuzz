@@ -11,7 +11,7 @@ function makeId() {
   return id;
 }
 
-export default = async function handler(req, res) {
+export default async function handler(req, res) {
   try {
     await connectDB();
 
