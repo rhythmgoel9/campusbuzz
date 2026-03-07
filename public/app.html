@@ -3225,7 +3225,7 @@ const data=await res.json();
 localStorage.setItem('cb_token',data.token);
 localStorage.setItem('cb_user_name',data.name);
 localStorage.setItem('cb_user_email',email);
-document.getElementById('auth-modal').style.display='none';
+const m=document.getElementById('auth-modal');m.style.display='none';m.style.visibility='hidden';
 location.reload();
 }catch(e){err.textContent='Server error!';err.style.display='block';}
 }
