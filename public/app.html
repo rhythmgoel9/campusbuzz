@@ -2026,7 +2026,8 @@ function AIRecommender(){
     const myRegs=API.getMyRegs();
     const regCats=myRegs.map(r=>{const ev=db.getEvent(r.eventId);return ev&&ev.cat;}).filter(Boolean);
     const allCats=[...new Set([...interests.map(function(i){return i.toLowerCase();}), ...regCats])];
-    const allEv=db.getAllEvents();
+    const fetchedEvs=await API.query({limit:50});
+    const allEv=fetchedEvs.events||[];
     var recs=[];
     if(allCats.length>0){
       allCats.forEach(function(cat){
@@ -2669,7 +2670,7 @@ function HomePage({go}){
   const [loading,setLoading]=useState(true);
   const [sel,setSel]=useState(null);
   useScrollReveal();
-  useEffect(()=>{(async()=>{const[s,f]=await Promise.all([API.stats(),API.query({limit:20})]);setStats(s);setFeatured(f.events);setLoading(false);})();},[]);
+  useEffect(()=>{(async()=>{const[s,f]=await Promise.all([API.stats(),API.query({limit:20})]);setStats(s);setFeatured(f.events);setLoading(false);try{localStorage.setItem("cb_events_cache",JSON.stringify(f.events));}catch(e){}})();},[]);
 
   const catDefs=[{cat:"concert",emoji:"🎵",name:"Concerts",color:"#ff2d9b"},{cat:"dance",emoji:"💃",name:"Dance",color:"#f5ff00"},{cat:"literary",emoji:"📚",name:"Literary",color:"#00d4ff"},{cat:"mun",emoji:"🌍",name:"MUN",color:"#9b4dff"},{cat:"fest",emoji:"🎪",name:"Fests",color:"#ff6b00"},{cat:"tech",emoji:"💻",name:"Tech",color:"#39ff14"},{cat:"music",emoji:"🎸",name:"Music",color:"#ff9900"},{cat:"dance",emoji:"💃",name:"Dance",color:"#f5ff00"}];
   const allEvsForCount=featured&&featured.length?featured:[];
@@ -3233,7 +3234,7 @@ const data=await res.json();
 localStorage.setItem('cb_token',data.token);
 localStorage.setItem('cb_user_name',data.name);
 localStorage.setItem('cb_user_email',email);
-const m=document.getElementById('auth-modal');m.style.display='none';m.style.visibility='hidden';if(!localStorage.getItem('cb_interests')){setTimeout(function(){document.getElementById('interest-modal').style.display='flex';},300);}else{location.reload();}
+const m=document.getElementById('auth-modal');m.style.display='none';m.style.visibility='hidden';var cbInt=localStorage.getItem('cb_interests');var cbIntParsed=cbInt?JSON.parse(cbInt):null;if(!cbInt||!cbIntParsed||cbIntParsed.length===0){setTimeout(function(){document.getElementById('interest-modal').style.display='flex';},300);}else{location.reload();}
 
 }catch(e){err.textContent='Server error!';err.style.display='block';}
 }
