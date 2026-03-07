@@ -2665,7 +2665,9 @@ function HomePage({go}){
   useScrollReveal();
   useEffect(()=>{(async()=>{const[s,f]=await Promise.all([API.stats(),API.query({limit:20})]);setStats(s);setFeatured(f.events);setLoading(false);})();},[]);
 
-  const cats=[{cat:"concert",emoji:"🎵",name:"Concerts",color:"#ff2d9b",count:2},{cat:"dance",emoji:"💃",name:"Dance",color:"#f5ff00",count:3},{cat:"literary",emoji:"📚",name:"Literary",color:"#00d4ff",count:2},{cat:"mun",emoji:"🌍",name:"MUN",color:"#9b4dff",count:2},{cat:"fest",emoji:"🎊",name:"Fests",color:"#ff6b00",count:1},{cat:"tech",emoji:"💻",name:"Tech",color:"#39ff14",count:2},{cat:"poetry",emoji:"✍️",name:"Poetry",color:"#bf5fff",count:1},{cat:"music",emoji:"🎸",name:"Music",color:"#ff9900",count:1}];
+  const catDefs=[{cat:"concert",emoji:"🎵",name:"Concerts",color:"#ff2d9b"},{cat:"dance",emoji:"💃",name:"Dance",color:"#f5ff00"},{cat:"literary",emoji:"📚",name:"Literary",color:"#00d4ff"},{cat:"mun",emoji:"🌍",name:"MUN",color:"#9b4dff"},{cat:"fest",emoji:"🎪",name:"Fests",color:"#ff6b00"},{cat:"tech",emoji:"💻",name:"Tech",color:"#39ff14"},{cat:"music",emoji:"🎸",name:"Music",color:"#ff9900"},{cat:"dance",emoji:"💃",name:"Dance",color:"#f5ff00"}];
+  const allEvsForCount=featured&&featured.length?featured:[];
+  const cats=catDefs.map(c=>({...c,count:allEvsForCount.filter(e=>e.cat===c.cat).length||0})).filter((c,i,a)=>a.findIndex(x=>x.cat===c.cat)===i);
 
   return(
     <div>
